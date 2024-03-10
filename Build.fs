@@ -22,8 +22,6 @@ Target.create "Clean" (fun _ ->
 
 Target.create "InstallClient" (fun _ -> run npm [ "install" ] ".")
 
-Target.create "Restore Tools" (fun _ -> run dotnet [ "tool"; "restore" ] ".")
-
 Target.create "Bundle" (fun _ ->
     [
         "server", dotnet [ "publish"; "-c"; "Release"; "-o"; deployPath ] serverPath
