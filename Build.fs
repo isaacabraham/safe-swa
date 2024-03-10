@@ -22,6 +22,8 @@ Target.create "Clean" (fun _ ->
 
 Target.create "InstallClient" (fun _ -> run npm [ "install" ] ".")
 
+Target.create "Restore Tools" (fun _ -> run dotnet [ "tool"; "restore" ] ".")
+
 Target.create "Bundle" (fun _ ->
     [
         "server", dotnet [ "publish"; "-c"; "Release"; "-o"; deployPath ] serverPath
@@ -70,7 +72,7 @@ Target.create "Format" (fun _ -> run dotnet [ "fantomas"; "." ] ".")
 open Fake.Core.TargetOperators
 
 let dependencies = [
-    "Clean" ==> "InstallClient" ==> "Bundle" ==> "Azure"
+    "Clean" ==> "InstallClient" ==> "Restore Tools" ==> "Bundle" ==> "Azure"
 
     "Clean" ==> "InstallClient" ==> "Run"
 
