@@ -30,11 +30,11 @@ Target.create "Bundle" (fun _ ->
     |> runParallel)
 
 Target.create "Azure" (fun _ ->
-    let web = webApp {
-        name "SAFE-App"
-        operating_system OS.Linux
-        runtime_stack (DotNet "8.0")
-        zip_deploy "deploy"
+    let web = staticWebApp {
+        name "SAFE-SWA"
+        repository "https://github.com/isaacabraham/safe-swa"
+        artifact_location "deploy/public"
+        app_settings [ "RUN_BUILD_COMMAND", "dotnet run Bundle" ]
     }
 
     let deployment = arm {
@@ -42,7 +42,11 @@ Target.create "Azure" (fun _ ->
         add_resource web
     }
 
-    deployment |> Deploy.execute "SAFE-App" Deploy.NoParameters |> ignore)
+    let token =
+        "repositorytoken-for-SAFE-SWA",
+        "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"
+
+    deployment |> Deploy.execute "SAFE-SWA" [ token ] |> ignore)
 
 Target.create "Run" (fun _ ->
     run dotnet [ "build" ] sharedPath
