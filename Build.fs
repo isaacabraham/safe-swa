@@ -34,7 +34,6 @@ Target.create "Azure" (fun _ ->
         name "SAFE-SWA"
         repository "https://github.com/isaacabraham/safe-swa"
         artifact_location "deploy/public"
-        app_settings [ "RUN_BUILD_COMMAND", "dotnet run Bundle" ]
     }
 
     let deployment = arm {
