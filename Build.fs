@@ -70,7 +70,7 @@ Target.create "Format" (fun _ -> run dotnet [ "fantomas"; "." ] ".")
 open Fake.Core.TargetOperators
 
 let dependencies = [
-    "Clean" ==> "InstallClient" ==> "Restore Tools" ==> "Bundle" ==> "Azure"
+    "Clean" ==> "InstallClient" ==> "Bundle" ==> "Azure"
 
     "Clean" ==> "InstallClient" ==> "Run"
 
